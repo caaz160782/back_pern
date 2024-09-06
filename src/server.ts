@@ -1,10 +1,8 @@
 import express from 'express'
-
+import router from './routes';
 // Create an instance of an Express application
 const server = express();
 
-server.get('/', (req, res) => {
-    res.send('Hello, World!');
-  });
+server.use('/api/products', router)
 
 export default server
