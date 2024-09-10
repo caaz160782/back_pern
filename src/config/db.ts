@@ -1,4 +1,4 @@
-import {Sequelize} from 'sequelize';
+import {Sequelize} from 'sequelize-typescript';
 require('dotenv').config();
 
 const DB_NAME    = process.env.DB_NAME;
@@ -8,7 +8,8 @@ const DB_HOST    = process.env.DB_HOST;
 
 const db = new Sequelize(DB_NAME,DB_USER,DB_PSW, {
     host: DB_HOST,
-    dialect: 'postgres' // Specify the PostgreSQL dialect
+    dialect: 'postgres' ,
+    models:[__dirname + '/../models/**/*.ts']
   });
 
 export default db  
