@@ -9,7 +9,8 @@ const DB_HOST    = process.env.DB_HOST;
 const db = new Sequelize(DB_NAME,DB_USER,DB_PSW, {
     host: DB_HOST,
     dialect: 'postgres' ,
-    models:[__dirname + '/../models/**/*.ts']
+    models:[__dirname + '/../models/**/*.ts'],
+    logging:false
   });
 
 export default db  

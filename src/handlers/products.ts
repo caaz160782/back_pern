@@ -1,6 +1,5 @@
 import { Request,Response } from "express";
 import Product from "../models/Product.model";
-import { check ,validationResult} from "express-validator";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -21,10 +20,17 @@ export const getAllProducts = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const {idProduct} = req.params 
-    const products = await Product.findByPk(idProduct)
+    const product = await Product.findByPk(idProduct)
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
     return res.status(200).json({
       message: "Product retrieved successfully",
-      payload: products
+      payload: product
     });
   } catch (error) {
     console.error('Error al obtener productos:', error);
@@ -63,12 +69,12 @@ export const updateProduct = async (req:Request, res:Response) => {
   
       if (updatedRows === 0) {
         return res.status(404).json({
-          message: "No se encontró el producto o no se realizaron cambios"
+          message: "Product not found"
         });
       }      
       const updatedProduct = await Product.findByPk(idProduct);  
       return res.status(200).json({
-        message: "Producto actualizado con éxito",
+        message: "Product updated successfully",
         payload: updatedProduct
       });
   
@@ -90,12 +96,12 @@ export const deleteProduct = async (req:Request, res:Response) => {
  
     if (deletedRows === 0) {
       return res.status(404).json({
-        message: "No se encontró el producto o ya fue eliminado"
+        message: "Product not found"
       });
     }
 
     return res.status(200).json({
-      message: "Producto eliminado con éxito"
+      message: "Product deleted successfully"
     });
 
   } catch (error) {
