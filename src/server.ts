@@ -10,7 +10,7 @@ const server = express();
 
 const CorsOptions:CorsOptions ={
     origin: function(origin,callback){
-        if(origin === process.env.FRONT_END_URL){
+        if(!origin || origin === process.env.FRONT_END_URL){
             callback(null,true)
         }else{
             callback(new Error('Error de CORS'))
